@@ -4,9 +4,13 @@ const MSGS = {
   };
   
   function update(msg, model) {
-    switch (msg) {
-      case MSGS.START_QUIZ:
-        return { ...model, page: "quiz" };
+    switch (msg.type) {
+      case MSGS.START_QUIZ: {
+        const firstCards = model.deck.slice(0, 3);
+        const restDeck = model.deck.slice(3);
+
+        return { ...model, page: "quiz", activeCards: firstCards, deck: restDeck };
+      }
       case MSGS.CREATE_CARD:
         return { ...model, page: "create" };
       default:

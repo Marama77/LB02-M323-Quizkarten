@@ -10,17 +10,39 @@ function homeView(dispatch) {
     const yellowBtn = baseBtn + " bg-yellow-500 hover:bg-yellow-700";
     const blueBtn = baseBtn + " bg-blue-500 hover:bg-blue-700";
   return div({ className: "flex flex-col gap-4 items-center" }, [
-      button({ className: yellowBtn, onclick: () => dispatch(MSGS.START_QUIZ) }, "Quiz beginnen"),
-      button({ className: blueBtn, onclick: () => dispatch(MSGS.CREATE_CARD) }, "Neue Karte erstellen"),
+      button({ className: yellowBtn, onclick: () => dispatch({type: MSGS.START_QUIZ}) }, "Quiz beginnen"),
+      button({ className: blueBtn, onclick: () => dispatch({type: MSGS.CREATE_CARD}) }, "Neue Karte erstellen"),
     ])
 };
 
 //Quiz-view
-function quizView(dispatch) {
-    return div({ className: "flex flex-col gap-4 items-center" }, [
-      span("Hier beginnt das Quiz!"),
-      button({ onclick: () => dispatch(MSGS.CREATE_CARD) }, "Zurück zur Karte")
-    ])
+//function quizView(dispatch) {
+    //return div({ className: "flex flex-col gap-4 items-center" }, [
+     // span("Hier beginnt das Quiz!"),
+     // button({ onclick: () => dispatch(MSGS.CREATE_CARD) }, "Zurück zur Karte")
+    //])
+//};
+function quizView(dispatch, model) {
+  const cardStyle =
+    "bg-yellow-300 w-44 h-64 flex items-center justify-center rounded shadow cursor-pointer text-center p-2";
+
+  return div({ className: "flex flex-col gap-6 items-center" }, [
+    div({ className: "text " }, "Beantworten Sie die Frage und decken Sie dann die Antwort auf!"),
+    // Karten nebeneinander
+    div({ className: "flex gap-4" },
+      model.activeCards.map((card, index) =>
+        div(
+          {
+            className: cardStyle,
+            //onclick: () =>
+              //dispatch({ type: MSGS.TOGGLE_CARD, index }),
+          },
+          card.showing === "question" ? card.question : card.answer
+        )
+      )
+    ),
+  ])
+  
 };
 
 //Create-view
