@@ -1,6 +1,9 @@
 const MSGS = {
     START_QUIZ: "START_QUIZ",
     CREATE_CARD: "CREATE_CARD",
+    UPDATE_QUESTION: "UPDATE_QUESTION",
+    UPDATE_ANSWER: "UPDATE_ANSWER",
+    SAVE_CARD: "SAVE_CARD"
   };
   
   function update(msg, model) {
@@ -13,9 +16,25 @@ const MSGS = {
       }
       case MSGS.CREATE_CARD:
         return { ...model, page: "create" };
+      case MSGS.UPDATE_QUESTION:
+        return { ...model, newQuestion: msg.value };
+      case MSGS.UPDATE_ANSWER:
+        return { ...model, newAnswer: msg.value};
+      case MSGS.SAVE_CARD: {
+        if (!model.newQuestion.trim() || !model.newAnswer.trim()) {
+          return model;
+        };
+        const newCard = {
+          question: model.newQuestion,
+          answer: model.newAnswer,
+          showing: "question"
+        };
+
+        return { ...model, deck: [ ...model.deck, newCard ], newQuestion: "", newAnswer: "", activeCards: [], page: "home"};
+      }
       default:
-        return { ...model };
-    }
+        return { ...model};
+    };
   }
   
   module.exports = { update, MSGS };

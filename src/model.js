@@ -1,3 +1,4 @@
+//Startzustand (initModel)
 function initModel() {
     return {
       page: "home",
@@ -9,6 +10,8 @@ function initModel() {
         { question: "Wie heisst eine männliche Biene?", answer: "Drohne", showing: "question" },
       ],
       activeCards: [],
+      newQuestion: "",
+      newAnswer: ""
     };
   }
   
