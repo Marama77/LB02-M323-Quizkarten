@@ -9,9 +9,13 @@ function initModel() {
         { question: "Wieviele Zacken hat ein Schneestern?", answer: "6", showing: "question" },
         { question: "Wie heisst eine männliche Biene?", answer: "Drohne", showing: "question" },
       ],
-      activeCards: [],
+      currentCard: null,
       newQuestion: "",
-      newAnswer: ""
+      newAnswer: "",
+
+      badCards: [],
+      goodCards: [],
+      greatCards: []
     };
   }
   
