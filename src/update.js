@@ -6,6 +6,7 @@ const MSGS = {
     SAVE_CARD: "SAVE_CARD",
     NEXT_CARD: "NEXT_CARD",
     TOGGLE_CARD: "TOGGLE_CARD",
+    DELETE_CARD: "DELETE_CARD",
 
     RANK_BAD: "RANK_BAD",
     RANK_GOOD: "RANK_GOOD",
@@ -81,6 +82,23 @@ const MSGS = {
                 showing: card.showing === "question" ? "answer" : "question"
             }
         };
+    }
+
+    case MSGS.DELETE_CARD: {
+      if (model.deck.length === 0) {
+        return {
+          ...model,
+          currentCard: null
+        };
+      }
+    
+      const [nextCard, ...restDeck] = model.deck;
+    
+      return {
+        ...model,
+        currentCard: nextCard,
+        deck: restDeck
+      };
     }
 
     case MSGS.RANK_BAD: {

@@ -39,35 +39,41 @@ function quizView(dispatch, model) {
     div({ className: "text" }, "Beantworten Sie die Frage und decken Sie dann die Antwort auf!"),
 
     card
-      ? div({ className: "flex flex-col items-center" }, [
-          div(
-            { className: cardStyle, onclick: () => dispatch({ type: MSGS.TOGGLE_CARD }) },
-            [
-              div({ className: "font-bold underline mb-1" }, "QUIZFRAGE"),
-              // Immer die Frage zeigen
-              div({ className: "flex-1 flex items-center justify-center" }, card.question),
-              div({ className: "font-bold underline mb-1" }, "ANTWORT"),
-              // Antwort nur anzeigen, wenn die Karte umgedreht wurde
-              card.showing === "answer" ? div({ className: "mt-2 text-green-700 font-semibold" }, card.answer)
-              : null,
-              
-              div({ className: "flex gap-2 mt-2" }, [
-                button({
-                  className: "bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded",
-                  onclick: () => dispatch({ type: MSGS.RANK_BAD })
-                }, "Bad"),
-                button({
-                  className: "bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded",
-                  onclick: () => dispatch({ type: MSGS.RANK_GOOD })
-                }, "Good"),
-                button({
-                  className: "bg-green-500 hover:bg-green-700 text-white px-2 py-1 rounded",
-                  onclick: () => dispatch({ type: MSGS.RANK_GREAT })
-                }, "Great")
-              ])
-            ]
-          )
-        ])
+      ? div({ className: "flex flex-col items-center relative" }, [
+        //Kreuz zum Löschen
+        button({
+          className: "absolute top-0 right-0 text-red-600 font-bold px-2 py-1",
+          onclick: () => dispatch({ type: MSGS.DELETE_CARD })
+        }, "×"),
+      
+        //Karte selbst
+        div(
+          { className: cardStyle, onclick: () => dispatch({ type: MSGS.TOGGLE_CARD }) },
+          [
+            div({ className: "font-bold underline mb-1" }, "QUIZFRAGE"),
+            div({ className: "flex-1 flex items-center justify-center" }, card.question),
+            div({ className: "font-bold underline mb-1" }, "ANTWORT"),
+            card.showing === "answer" ? div({ className: "mt-2 text-green-700 font-semibold" }, card.answer) : null,
+      
+            div({ className: "flex gap-2 mt-2" }, [
+              button({
+                className: "bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded",
+                onclick: () => dispatch({ type: MSGS.RANK_BAD })
+              }, "Bad"),
+      
+              button({
+                className: "bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded",
+                onclick: () => dispatch({ type: MSGS.RANK_GOOD })
+              }, "Good"),
+      
+              button({
+                className: "bg-green-500 hover:bg-green-700 text-white px-2 py-1 rounded",
+                onclick: () => dispatch({ type: MSGS.RANK_GREAT })
+              }, "Great")
+            ])
+          ]
+        )
+      ])
       : null,
 
     button({ className: buttonStyle, onclick: () => dispatch({ type: MSGS.NEXT_CARD }) }, "Nächste Karte"),
